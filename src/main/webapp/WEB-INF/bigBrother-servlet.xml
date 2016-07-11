@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ 	xmlns:context="http://www.springframework.org/schema/context"
+ 	xmlns:p="http://www.springframework.org/schema/p"
+ 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+ 	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    
+    <!-- 激活 @Required @Autowired,JSR 250's @PostConstruct, @PreDestory and @Resource 等标注 -->
+    <context:annotation-config />
+    
+    <!-- DispatcherSevlet 上下文， 只搜索@Controller 标注的类，不搜索其他标注的类 -->
+    <context:component-scan base-package="com.archy.test.web.controller">
+    	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
+    
+    
+    <!-- 让dispatcherServlet 启用基于 annotation 的 handlerMapping -->
+    <mvc:annotation-driven />
+    
+    
+    <!-- 使用 freemarker 需要进行它的配置 -->
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+    	<property name="templateLoaderPath" value="/WEB-INF/template/" />
+    </bean>
+    
+    <!-- 配置一个 ViewResolve , 告诉 dispatcherServlet 用那个 viewResolve来获取view -->
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+    	<property name="viewResolvers">
+    		<list>
+    			<bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+    				<property name="cache" value="true" />
+    				<property name="prefix" value="" />
+    				<property name="suffix" value=".ftl" /> 
+    				<property name="contentType" value="text/html; charset=utf-8" />
+    			</bean>
+    		</list>
+    	</property>
+    	<property name="defaultViews">
+    		<list>
+    			<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+    		</list>
+    	</property>
+    </bean>
+</beans>
