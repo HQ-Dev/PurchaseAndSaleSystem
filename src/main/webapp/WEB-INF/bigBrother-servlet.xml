@@ -23,6 +23,10 @@
     <!-- 让dispatcherServlet 启用基于 annotation 的 handlerMapping -->
     <mvc:annotation-driven />
     
+    <!-- 访问静态资源的处理， css, js, imgs -->
+    <!--  <mvc:resources mapping="" location="" /> -->
+    
+    <mvc:default-servlet-handler/>
     
     <!-- 使用 freemarker 需要进行它的配置 -->
     <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
@@ -34,7 +38,7 @@
     	<property name="viewResolvers">
     		<list>
     			<bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-    				<property name="cache" value="true" />
+    				<property name="cache" value="false" />
     				<property name="prefix" value="" />
     				<property name="suffix" value=".ftl" /> 
     				<property name="contentType" value="text/html; charset=utf-8" />
