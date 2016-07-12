@@ -14,7 +14,7 @@ public class MD5 {
 		try {
 			MessageDigest md =  MessageDigest.getInstance("MD5");
 			byte[] md5Bytes = md.digest(sourceCode.getBytes());
-			result =  md5Bytes.toString();
+			result =  Hex.encodeHexString(md5Bytes);
 //			// 需要转成16进制,可以借助第三方的包
 //			System.out.println("JDK MD5: " + Hex.encodeHexString(md5Bytes));
 		} catch (NoSuchAlgorithmException e) {
