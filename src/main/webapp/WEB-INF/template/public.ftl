@@ -32,7 +32,7 @@
             <div class="fmitem">
                 <label class="fmlab"></label>
                 <div class="fmipt" id="urlUpload">
-                    <input class="u-ipt ipt"  name="image" placeholder="图片地址"/>
+                    <input class="u-ipt ipt"  name="icon" placeholder="图片地址"/>
                 </div>
                 <div class="fmipt" id="fileUpload"  style="display:none">
                     <input class="u-ipt ipt" name="file" type="file" id="fileUp"/>
@@ -42,7 +42,7 @@
             <div class="fmitem">
                 <label class="fmlab">正文：</label>
                 <div class="fmipt">
-                    <textarea class="u-ipt" name="detail" rows="10" placeholder="2-1000个字符"></textarea> 
+                    <textarea class="u-ipt" name="text" rows="10" placeholder="2-1000个字符"></textarea> 
                 </div>
             </div>
             <div class="fmitem">

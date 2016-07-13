@@ -15,7 +15,7 @@
     <div class="n-result">
         <h3>编辑失败！</h3>
         <#-- /edit?id=${productId} -->
-        <p><a href="#">[重新编辑]</a><a href="/">[返回首页]</a></p>
+        <p><a href="/edit?id=${productId}">[重新编辑]</a><a href="/">[返回首页]</a></p>
     </div>
     </#if>
 </div>

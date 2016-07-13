@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.archy.test.meta.Product;
 import com.archy.test.meta.Person;
 
 import freemarker.core.ReturnInstruction.Return;
@@ -60,4 +61,101 @@ public class JdbcTemplateDao {
 	}
 	
 	
+	public boolean insertGood(Product product) {
+		
+		int affected = jdbcTemplate.update("INSERT INTO product(price,title,icon,abstract,text)"
+				+ " VALUES(?,?,?,?,?)", product.getPrice()
+				,product.getTitle(),product.getIcon(),product.getSummary(),product.getText());
+		if (affected != 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
+	// 读取 products 列表
+	public List<Product> getProducts() {
+		Product product = new Product();
+		
+		List<Product> products = jdbcTemplate.query("select * from product", new RowMapper<Product>() {
+			@Override
+			public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Product product = new Product();
+				product.setId(rs.getInt("id"));
+				product.setPrice(rs.getInt("price"));
+				product.setTitle(rs.getString("title"));
+				product.setIcon(rs.getString("icon"));   // 获取BLOB需要别的方法
+				product.setSummary(rs.getString("abstract"));
+				product.setText(rs.getString("text"));
+				product.setBuy(rs.getInt("isBuy"));
+				product.setSell(rs.getInt("isSell"));
+				return product;
+			}
+		});
+		
+		if (!products.isEmpty()) { 
+			return products;
+		} else {
+			return null;
+		}
+	}
+	
+	public Product getProductById(int id) {
+		final Product product = new Product();
+		
+		jdbcTemplate.query(String.format("select * from product where id = %d", id), new RowMapper<Product>() {
+			
+			@Override
+			public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+				product.setId(rs.getInt("id"));
+				product.setPrice(rs.getInt("price"));
+				product.setTitle(rs.getString("title"));
+				product.setIcon(rs.getString("icon"));   
+				product.setSummary(rs.getString("abstract"));
+				product.setText(rs.getString("text"));
+				product.setBuy(rs.getInt("isBuy"));
+				product.setSell(rs.getInt("isSell"));
+				return product;
+			}
+			
+		});
+		
+		return product;
+	}
+
+	public Product getProductByTitle(String title) {
+		Product product = new Product();
+		List<Product> products = new ArrayList<Product>();
+		products = jdbcTemplate.query(String.format("select * from product where title = '%s'", title), new RowMapper<Product>() {
+			
+			@Override
+			public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Product product = new Product();
+				product.setId(rs.getInt("id"));
+				product.setPrice(rs.getInt("price"));
+				product.setTitle(rs.getString("title"));
+				product.setIcon(rs.getString("icon"));   
+				product.setSummary(rs.getString("abstract"));
+				product.setText(rs.getString("text"));
+				product.setBuy(rs.getInt("isBuy"));
+				product.setSell(rs.getInt("isSell"));
+				return product;
+			}
+			
+		});
+		product = products.get(0);
+		return product;
+	}
+	
+	public boolean updateProduct(Product product, int id) {
+		
+		int affected = jdbcTemplate.update("UPDATE product SET price=?,title=?,icon=?,abstract=?,text=? WHERE id = ?", product.getPrice()
+				,product.getTitle(),product.getIcon(),product.getSummary(),product.getText(), id);
+		if (affected != 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

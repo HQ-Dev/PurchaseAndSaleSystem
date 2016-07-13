@@ -1,6 +1,6 @@
 package com.archy.test.meta;
 
-public class Content {
+public class Product {
 
 	private int id;
 	private String title;
@@ -9,7 +9,12 @@ public class Content {
 	private String icon;
 	private String text;
 	
-	public Content() {}
+	private int buy = 0;
+	private int sell = 0;
+	
+	private int buyNum = 0;
+	
+	public Product() {}
 
 	public int getId() {
 		return id;
@@ -57,6 +62,31 @@ public class Content {
 
 	public void setText(String text) {
 		this.text = text;
-	};
+	}
+
+	public int getBuy() {
+		return buy;
+	}
+
+	public void setBuy(int buy) {
+		this.buy = buy;
+	}
+
+	public int getSell() {
+		return sell;
+	}
+
+	public void setSell(int sell) {
+		this.sell = sell;
+	}
+
+	public int getBuyNum() {
+		return buyNum;
+	}
+
+	public void setBuyNum(int buyNum) {
+		this.buyNum = buyNum;
+	}
+
 	
 }

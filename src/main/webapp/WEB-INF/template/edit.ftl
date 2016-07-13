@@ -7,13 +7,13 @@
     <div class="m-tab m-tab-fw m-tab-simple f-cb">
         <h2>内容编辑</h2>
     </div>
-    <#if !product>
+    <#if !product??>
     <div class="n-result">
         <h3>内容不存在！</h3>
     </div>
     <#else>
     <div class="n-public">
-        <form class="m-form m-form-ht" id="form" method="post" action="/editSubmit?id=${product.id}" onsubmit="return false;" autocomplete="off">
+        <form class="m-form m-form-ht" id="form" method="post" action="/editSubmit?id=${product.id}" autocomplete="off">
             <div class="fmitem">
                 <label class="fmlab">标题：</label>
                 <div class="fmipt">
@@ -37,7 +37,7 @@
             <div class="fmitem">
                 <label class="fmlab"></label>
                 <div class="fmipt" id="urlUpload">
-                    <input class="u-ipt ipt"  name="image" placeholder="图片地址"/>
+                    <input class="u-ipt ipt"  name="icon" placeholder="图片地址"/>
                 </div>
                 <div class="fmipt" id="fileUpload"  style="display:none">
                     <input class="u-ipt ipt" name="file" type="file" id="fileUp"/>
@@ -47,7 +47,7 @@
             <div class="fmitem">
                 <label class="fmlab">正文：</label>
                 <div class="fmipt">
-                    <textarea class="u-ipt" name="detail" rows="10" placeholder="2-1000个字符">${product.detail}</textarea>
+                    <textarea class="u-ipt" name="text" rows="10" placeholder="2-1000个字符">${product.text}</textarea>
                 </div>
             </div>
             <div class="fmitem">
@@ -62,7 +62,7 @@
                 </div>
             </div>
         </form>
-        <span class="imgpre"><img src="${product.image}" alt="" id="imgpre"></span>
+        <span class="imgpre"><img src="${product.icon}" alt="" id="imgpre"></span>
     </div>
     </#if>
 </div>
