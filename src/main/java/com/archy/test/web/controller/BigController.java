@@ -1,10 +1,13 @@
 package com.archy.test.web.controller;
 
+import java.io.Console;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,6 +25,7 @@ import com.archy.test.meta.Product;
 import com.archy.test.meta.Json;
 import com.archy.test.meta.Person;
 import com.archy.test.utils.MD5;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 @Controller
 public class BigController {
@@ -49,13 +53,12 @@ public class BigController {
 	}
 	
 	@RequestMapping("/api/login")
-	@ResponseBody
-	public Json login(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+	//@ResponseBody
+	public String login(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		String userName = request.getParameter("userName");
-		String password = request.getParameter("password");
-		//String password = MD5.jkdMD5(request.getParameter("password"));  // 获取经过MD5加密后的密码和数据库中的密码作比对
+		String password = MD5.jkdMD5(request.getParameter("password"));  // 获取经过MD5加密后的密码和数据库中的密码作比对
 
 		ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
 		JdbcTemplateDao dao = context.getBean("jdbcTemplateDao", JdbcTemplateDao.class);
@@ -65,14 +68,14 @@ public class BigController {
 			if (person != null) {
 				// 获取数据库数据，验证成功
 				request.getSession().setAttribute("user", person);
-				Json json  = new Json(200, "dsa", true);
-				return json;
-				//return "index";
+				//Json json  = new Json(200, "dsa", true);
+				//return json;
+				return "index";
 			} else {
 				// 登录失败！
-				Json json = new Json(400, "dsad", false);
-				return json;
-				//return "index";
+				//Json json = new Json(400, "dsad", false);
+				//return json;
+				return "index";
 			}
 		//}
 			//catch (IOException e) {
@@ -186,5 +189,29 @@ public class BigController {
 		return json;
 		//request.getRequestDispatcher("/").forward(request, response);
 		
+	}
+	
+	@RequestMapping("/settleAccount")
+	public String settleAccoutn(HttpServletRequest request) {
+		Object aObject = request.getSession().getAttribute("products");
+		
+		return "settleAccount";
+	}
+	
+	@RequestMapping("/api/buy")
+	@ResponseBody
+	public Json buyProducts(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		Json json = new Json(200, "dsd", true);
+		
+		// 接下来是为了得到商品的id值域
+		
+		return json;
+		//return null;
+	}
+	
+	@RequestMapping("/account")
+	public String account() {
+		return "account";
 	}
 }

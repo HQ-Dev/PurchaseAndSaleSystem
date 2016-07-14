@@ -9,7 +9,7 @@
     <div class="m-tab m-tab-fw m-tab-simple f-cb">
         <div class="tab">
             <ul>
-                <li <#if !listType || listType != 1>class="z-sel"</#if> ><a href="/">所有内容</a></li>
+                <li <#if !listType || listType != 1??>class="z-sel"</#if> ><a href="/">所有内容</a></li>
                 <#if user?? && user.userType == 0><li <#if listType == 1??>class="z-sel"</#if> ><a href="/?type=1">未购买的内容</a></li></#if>
             </ul>
         </div>
@@ -23,7 +23,7 @@
         <ul class="f-cb" id="plist">
         <#if user?? && user.userType == 0 && listType == 1??>
             <#list productList as x>
-                <#if !x.isBuy>
+                <#if x.buy == 0>
                 <li id="p-${x.id}">
                     <a href="/show?id=${x.id}" class="link">
                         <div class="img"><img src="${x.icon}" alt="${x.title}"></div>

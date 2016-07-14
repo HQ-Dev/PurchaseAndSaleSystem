@@ -28,6 +28,8 @@
     
     <mvc:default-servlet-handler/>
     
+    
+    
     <!-- 使用 freemarker 需要进行它的配置 -->
     <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
     	<property name="templateLoaderPath" value="/WEB-INF/template/" />
