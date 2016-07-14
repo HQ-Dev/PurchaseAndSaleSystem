@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitterReturnValueHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.archy.test.dao.JdbcTemplateDao;
 import com.archy.test.meta.Product;
+import com.archy.test.meta.Json;
 import com.archy.test.meta.Person;
 import com.archy.test.utils.MD5;
 
@@ -48,11 +49,13 @@ public class BigController {
 	}
 	
 	@RequestMapping("/api/login")
-	public String login(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+	@ResponseBody
+	public Json login(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		String userName = request.getParameter("userName");
-		String password = MD5.jkdMD5(request.getParameter("password"));  // 获取经过MD5加密后的密码和数据库中的密码作比对
+		String password = request.getParameter("password");
+		//String password = MD5.jkdMD5(request.getParameter("password"));  // 获取经过MD5加密后的密码和数据库中的密码作比对
 
 		ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
 		JdbcTemplateDao dao = context.getBean("jdbcTemplateDao", JdbcTemplateDao.class);
@@ -62,10 +65,14 @@ public class BigController {
 			if (person != null) {
 				// 获取数据库数据，验证成功
 				request.getSession().setAttribute("user", person);
-				return "index";
+				Json json  = new Json(200, "dsa", true);
+				return json;
+				//return "index";
 			} else {
 				// 登录失败！
-				return "login";
+				Json json = new Json(400, "dsad", false);
+				return json;
+				//return "index";
 			}
 		//}
 			//catch (IOException e) {
@@ -163,7 +170,21 @@ public class BigController {
 			((ClassPathXmlApplicationContext) context).close();
 			return "editSubmit";
 		}
-		
+	}
+	
+	@RequestMapping("/api/delete")
+	@ResponseBody
+	public Json deleteProduct(@RequestParam("id") Number id,HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		int number = id.intValue();
+		// 根据 id 删除数据库中的对应 product
+		ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
+		JdbcTemplateDao dao = context.getBean("jdbcTemplateDao", JdbcTemplateDao.class);
+		dao.deleteProductById(number);
+		((ClassPathXmlApplicationContext) context).close();
+		Json json = new Json(200, "ss", true);
+		return json;
+		//request.getRequestDispatcher("/").forward(request, response);
 		
 	}
 }

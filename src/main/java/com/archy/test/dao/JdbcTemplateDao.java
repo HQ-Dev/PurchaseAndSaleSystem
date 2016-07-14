@@ -158,4 +158,13 @@ public class JdbcTemplateDao {
 			return false;
 		}
 	}
+
+	public boolean deleteProductById(int number) {
+		int affected = jdbcTemplate.update("DELETE FROM `product` WHERE `id` = ?", number);
+		if (affected != 0 ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

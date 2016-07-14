@@ -18,26 +18,26 @@
                 <label class="fmlab">标题：</label>
                 <div class="fmipt">
                     <input type="hidden" name="id" value="${product.id}"/>
-                    <input class="u-ipt ipt" name="title" value="${product.title}" placeholder="2-80字符"/>
+                    <input class="u-ipt ipt" name="title" value="${product.title}" placeholder="2-80字符" required=""/>
                 </div>
             </div>
             <div class="fmitem">
                 <label class="fmlab">摘要：</label>
                 <div class="fmipt">
-                    <input class="u-ipt ipt" name="summary" value="${product.summary}" placeholder="2-140字符"／>
+                    <input class="u-ipt ipt" name="summary" value="${product.summary}" placeholder="2-140字符" required=""／>
                 </div>
             </div>
             <div class="fmitem">
             <label class="fmlab">图片：</label>
             	<div class="fmipt" id="uploadType">
-	                <input name="pic" type="radio" value="url" checked /> 图片地址
+	                <input name="pic" type="radio" value="icon" checked /> 图片地址
 					<input name="pic" type="radio" value="file" /> 本地上传
 				</div>	
             </div>
             <div class="fmitem">
                 <label class="fmlab"></label>
                 <div class="fmipt" id="urlUpload">
-                    <input class="u-ipt ipt"  name="icon" placeholder="图片地址"/>
+                    <input class="u-ipt ipt"  name="icon" placeholder="${product.icon}" required=""/>
                 </div>
                 <div class="fmipt" id="fileUpload"  style="display:none">
                     <input class="u-ipt ipt" name="file" type="file" id="fileUp"/>
@@ -53,7 +53,7 @@
             <div class="fmitem">
                 <label class="fmlab">价格：</label>
                 <div class="fmipt">
-                    <input class="u-ipt price" name="price" value="${product.price}"/>元
+                    <input class="u-ipt price" name="price" value="${product.price}" required=""/>元
                 </div>
             </div>
             <div class="fmitem fmitem-nolab fmitem-btn">
