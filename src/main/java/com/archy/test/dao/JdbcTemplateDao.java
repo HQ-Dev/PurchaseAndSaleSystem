@@ -28,7 +28,7 @@ public class JdbcTemplateDao {
 	
 	public Person getPerson(String userName, String password) {
 		Person person = new Person();
-		List<Person> persons = new ArrayList<>();
+		List<Person> persons = new ArrayList<Person>();
 		
 		persons = jdbcTemplate.query(String.format("select * from person where userName = '%s'", userName), new RowMapper<Person>() {
 			@Override
